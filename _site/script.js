@@ -18,6 +18,23 @@ const moonMaterial = new THREE.MeshPhongMaterial({ color: 0x888888 });
 const moon = new THREE.Mesh(moonGeometry, moonMaterial);
 scene.add(moon);
 
+// Rings
+function addRing(radius, innerRadiusFactor, color) {
+    const ringGeometry = new THREE.RingGeometry(radius * innerRadiusFactor, radius, 64);
+    const ringMaterial = new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide });
+    // ringMaterial.uniforms.transparent = true;
+    // ringMaterial.uniforms.opacity.value = 0.3;
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.rotation.x = Math.PI / 2;
+    scene.add(ring);
+}
+
+const numberOfRings = 3;
+const baseRadius = 5;
+for (let i = 0; i < numberOfRings; i++) {
+    addRing(baseRadius + i * 15, 0.9, 0x222277);
+}
+
 // Orbit Configuration
 const orbitRadius = 30; // Moon's orbit radius
 const daysPerOrbit = 27.3;
@@ -27,7 +44,7 @@ const orbitSpeed = (2 * Math.PI) / (daysPerOrbit * 24 * 60 * 60 * 1000); // radi
 const startTime = Date.now();
 
 // Camera pos
-camera.position.set(0, 0, 100); // Position the camera further away
+camera.position.set(0, 10, 60); // Position the camera further away
 
 // Create a directional light (simulating sunlight)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // White light

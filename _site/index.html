@@ -3,25 +3,45 @@
 <head>
     <title>Earth/Moon Simulation</title>
     <style>
-        body { margin: 0; }
+        body { margin: 0; width: 100%; }
         canvas { width: 100%; height: 100% }
         #controlPanel {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            position: relative;
+            display: flex;
+            margin: auto;
+            align-content: center;
+            justify-content: center;
+            width: 100%;
+            background-color: black;
+
+            color: aquamarine;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        #full-width {
+            width: 100vw;
         }
         button {
-            margin: 5px;
+            margin: 8px;
+            color: aquamarine;
+            background-color: navy;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            padding: 4px;
         }
     </style>
 </head>
 <body>
-    <div>
-        <button id="speed1x">1x</button>
-        <button id="speed10x">10x</button>
-        <button id="speed100x">100x</button>
-        <button id="speed1000x">1000x</button>
-        <button id="speed10000x">10000x</button>
+    <div id="full-width">
+        <div id="controlPanel">
+            <span style="padding-top: 12px;">Time: </span>
+            <button id="speed1x">1x</button>
+            <button id="speed10x">10x</button>
+            <button id="speed100x">100x</button>
+            <button id="speed1000x">1000x</button>
+            <button id="speed10000x">10000x</button>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
