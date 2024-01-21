@@ -34,15 +34,26 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // White light
 directionalLight.position.set(5, 3, 5); // Position the light source
 scene.add(directionalLight);
 
+// Orbit Speed Control
+let speedMultiplier = 1;
+
+// Set up event listeners for buttons
+document.getElementById('speed1x').addEventListener('click', () => { speedMultiplier = 1; });
+document.getElementById('speed10x').addEventListener('click', () => { speedMultiplier = 10; });
+document.getElementById('speed100x').addEventListener('click', () => { speedMultiplier = 100; });
+document.getElementById('speed1000x').addEventListener('click', () => { speedMultiplier = 1000; });
+document.getElementById('speed10000x').addEventListener('click', () => { speedMultiplier = 10000; });
+
+
 // Animation Loop
 function animate() {
     requestAnimationFrame(animate);
 
-    // Calculate elapsed time
+    // Calculate elapsed time since the start, then apply the speed multiplier
     const currentTime = Date.now();
-    const elapsedTime = currentTime - startTime;
+    const elapsedTime = (currentTime - startTime) * speedMultiplier;
 
-    // Update Moon Position based on real time elapsed
+    // Update Moon Position based on the adjusted elapsed time
     const moonAngle = orbitSpeed * elapsedTime;
     moon.position.set(orbitRadius * Math.cos(moonAngle), 0, orbitRadius * Math.sin(moonAngle));
 
