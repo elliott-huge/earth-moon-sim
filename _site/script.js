@@ -40,6 +40,39 @@ const orbitRadius = 30; // Moon's orbit radius
 const daysPerOrbit = 27.3;
 const orbitSpeed = (2 * Math.PI) / (daysPerOrbit * 24 * 60 * 60 * 1000); // radians per millisecond
 
+// Starry Background with Twinkling Stars
+function createTwinklingStars() {
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsMaterial = new THREE.PointsMaterial({
+        color: 0xFFFFFF,
+        size: 0.1,
+        transparent: true,
+        opacity: 0.8
+    });
+
+    const starsCount = 10000;
+    const positionArray = new Float32Array(starsCount * 3); // x, y, z for each star
+    const opacityArray = new Float32Array(starsCount); // opacity for each star
+
+    for (let i = 0; i < starsCount; i++) {
+        positionArray[i * 3 + 0] = (Math.random() - 0.5) * 2000; // x
+        positionArray[i * 3 + 1] = (Math.random() - 0.5) * 2000; // y
+        positionArray[i * 3 + 2] = (Math.random() - 0.5) * 2000; // z
+        opacityArray[i] = Math.random();
+    }
+
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3));
+    starsGeometry.setAttribute('opacity', new THREE.BufferAttribute(opacityArray, 1));
+
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    return stars;
+}
+
+const twinklingStars = createTwinklingStars();
+
+
 // Start Time
 const startTime = Date.now();
 
@@ -65,6 +98,13 @@ document.getElementById('speed10000x').addEventListener('click', () => { speedMu
 // Animation Loop
 function animate() {
     requestAnimationFrame(animate);
+
+    // Twinkling effect
+    const opacity = twinklingStars.geometry.attributes.opacity;
+    for (let i = 0; i < opacity.count; i++) {
+        opacity.array[i] = Math.random();
+    }
+    opacity.needsUpdate = true;
 
     // Calculate elapsed time since the start, then apply the speed multiplier
     const currentTime = Date.now();
